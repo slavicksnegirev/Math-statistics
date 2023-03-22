@@ -9,7 +9,7 @@ pmf = np.round(pmf, 5)
 print(pmf)
 
 plt.plot(numbers, pmf)
-plt.ylabel('Вероятность')
+plt.title('Функция вероятности')
 plt.show()
 
 cdf = poisson.cdf(numbers, mu=1)
@@ -17,7 +17,7 @@ cdf = np.round(cdf, 5)
 print(cdf)
 
 plt.plot(numbers, cdf)
-plt.ylabel('Вероятность')
+plt.title('Функция распределения')
 plt.show()
 
 
