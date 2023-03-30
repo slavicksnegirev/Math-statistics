@@ -10,18 +10,8 @@ def draw_plot(x, y):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(x, y)
-    ax.set_xlim([0, 20])
-    ax.set_ylim([0, 0.4])
-    plt.show()
-
-
-def draw_plt(x, y):
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(x, y)
-    ax.set_xlim([0, 20])
-    ax.set_ylim([0, 1.2])
-    plt.show()
+    ax.set_xlim([0, 100])
+    ax.set_ylim([0, 0.25])
 
 
 pmf = poisson.pmf(numbers, mu=5)
@@ -38,8 +28,10 @@ s = poisson.rvs(mu=5, size=100)
 print(s)
 fig = plt.figure()
 ax = fig.add_subplot(111)
+ax.set_xlim([0, 100])
+ax.set_ylim([0, 0.25])
 bins = list(np.arange(0, 20, 1))
-plt.hist(s, bins=bins, color='lightgreen', edgecolor='black', rwidth=0.9)
+plt.hist(s, bins=bins,density=True, color='lightgreen', edgecolor='black', rwidth=1)
 plt.grid(axis='y', alpha=0.75)
 plt.show()
 
