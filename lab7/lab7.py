@@ -36,19 +36,19 @@ mX3 = X3.mean()
 mmX = X.mean()
 
 mX = np.array([mX1, mX2, mX3])
-# mmX = mX.mean()
 
 # Проверка основной гипотезы Но о равенстве групповых средних с помощью однофакторного дисперсионного анализа
 Q1 = N * ((mX1 - mmX)**2 + (mX2 - mmX)**2 + (mX3 - mmX)**2)
 Q2 = sum((X1 - mX1) ** 2) + sum((X2 - mX2) ** 2) + sum((X3 - mX3) ** 2)
-print(Q1, Q2)
+print(f"Q1 = {Q1}, Q2 = {Q2})")
 
 # Статистика критерия
 F = (nn - k)*Q1/((k-1) * Q2)
-print(F)
+print(f"Статистика критерия F = {F}")
 
 # Квантили распределения Фишера на уровне значимости а = 0.05
-print(st.f.ppf(alpha/2, k-1, nn-k), st.f.ppf(1-alpha/2, k-1, nn-k))
+print(f"Квантили распределения Фишера на уровне значимости а = 0.05: ({st.f.ppf(alpha/2, k-1, nn-k)};"
+       f" {st.f.ppf(1-alpha/2, k-1, nn-k)})")
 
 # Поскольку статистика критерия F не входит в интервал принятия гипотезы (a/2; 1-a/2), то гипотезу Ho отвергаем.
 # Попарное сравнение средних с использованием метода линейных контрастов
@@ -56,59 +56,59 @@ L1 = mX1 - mX2
 D1 = Q2/(nn-k) * (1/N + 1/N)
 L1_left = L1 - math.sqrt(D1)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
 L1_right = L1 + math.sqrt(D1)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
-print(L1, D1, L1_left, L1_right)
+print(f"L1 = {L1}, D1 = {D1}, L1_left = {L1_left}, L1_right = {L1_right}")
 
 L2 = mX3 - mX2
 D2 = Q2/(nn-k) * (1/N + 1/N)
 L2_left = L2 - math.sqrt(D2)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
 L2_right = L2 + math.sqrt(D2)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
-print(L2, D2, L2_left, L2_right)
+print(f"L2 = {L2}, D2 = {D2}, L2_left = {L2_left}, L2_right = {L2_right}")
 
 L3 = mX1 - mX3
 D3 = Q2/(nn-k) * (1/N + 1/N)
 L3_left = L3 - math.sqrt(D3)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
 L3_right = L3 + math.sqrt(D3)*math.sqrt(st.f.ppf(1-alpha, k-1, nn-k))
-print(L3, D3, L3_left, L3_right)
+print(f"L3 = {L3}, D3 = {D3}, L3_left = {L3_left}, L3_right = {L3_right}")
 
 # Ранговый критерий Краскела
 Z = sorted(X)
 # Находим ранги каждого элемента в общем вариационном ряду:
 R = st.rankdata(X)
-print(Z, X, R)
+print(f"Z = {Z}\nX = {X}\nR = {R}")
 
 # Составляем статистику Критерия Краскела (H-критерий):
 sumR = sum(R)
 sumRY1 = sum(R[0:N])
 sumRY2 = sum(R[N:N+N])
 sumRY3 = sum(R[N+N:nn])
-print(sumR, sumRY1, sumRY2, sumRY3)
+print(f"sumR = {sumR}, sumRY1 = {sumRY1}, sumRY2 = {sumRY2}, sumRY3 = {sumRY3}")
 
 H = 12/(nn*(nn+1)) * (math.pow(sumRY1, 2)/N + math.pow(sumRY2, 2)/N + math.pow(sumRY3, 2)/N) - 3*(nn+1)
-print(H)
+print(f"H = {H}")
 
 # Есть совпадающие наблюдения, поэтому следует модифицировать статистику H
 RR = st.rankdata(Z)
-print(RR)
+print(f"RR = {RR}")
 
 # Совподающие наблюдения
 T = sorted({x for x in RR if list(RR).count(x) > 1})
-print(T)
+print(f"T = {T}")
 for i in range(len(T)):
     count = 0
     for j in range(len(RR)):
         if RR[j] == T[i]:
             count += 1
     T[i] = math.pow(count, 3) - count
-print(T)
+print(f"T = {T}")
 
 # Статистика критерия с поправкой:
 H1 = H/(1-sum(T)/(math.pow(nn,3)-nn))
-print(H1)
+print(f"H1 = {H1}")
 
 # Квантиль распределения хи-квадрат на уровне значимости α = 0.05:
 qchi2 = st.chi2.ppf(1-alpha, k-1)
-print(qchi2)
-# Поскольку статистика критерия 23.982 не входит в интервал принятия гипотезы (0; 5.991), то гипотезу H0 снова
+print(f"qchi2 = {qchi2}")
+# Поскольку статистика критерия 23.982 не входит в интервал принятия гипотезы (0; 5.991), то гипотезу Ho снова
 # отвергаем.
 
 
