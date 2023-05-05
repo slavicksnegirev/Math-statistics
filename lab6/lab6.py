@@ -23,7 +23,12 @@ from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 
 x = [7.9, 11.6, 12.8, 14.9, 16.3, 18.6, 20.3, 21.9, 23.6]
-y = [13.0, 22.8, 24.8, 28.6, 31.6, 38.7, 40.0, 44.9, 43.0]
+y = []
+for i in range(len(x)):
+    y.append(math.pow(x[i],2))
+print(y)
+# y = [13.0, 22.8, 24.8, 28.6, 31.6, 38.7, 40.0, 44.9, 43.0]
+
 
 n = len(x) # длина массива
 
