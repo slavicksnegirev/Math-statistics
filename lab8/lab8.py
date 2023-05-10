@@ -23,32 +23,36 @@ D = sp.Matrix([[0],
 print(Sw)
 
 r = sp.Matrix.eigenvals(A)
-H = sp.eye(A.shape[0])
-Hp = p*H - A
 print(r)
-print(H)
-print(Hp)
 
+H = sp.eye(A.shape[0])
+print(H)
+Hp = p*H - A
+print(Hp)
 H1p = Hp.inv()
+print(H1p)
 Wp = sp.simplify(C * H1p * B - D)
 print(Wp)
+
 W1 = Wp.subs(p, i * w)
-W2 = Wp.subs(p, -i * w)
 print(W1)
+W2 = Wp.subs(p, -i * w)
 print(W2)
 
-Spectr_w = W1 * W2.T
-print(Spectr_w)
-Sy_w = sp.simplify(Sw * Spectr_w)
-print(Sy_w)
+Spectr = W1 * W2.T
+print(f"Spectr = {Spectr}")
+
+Sy_w = sp.simplify(Sw * Spectr)
+print(f"Sy_w = {Sy_w}")
+
 Sy1_w = sp.expand(Sy_w[0]).subs(i**2,-1)
-print(Sy1_w)
+print(f"Sy1_w = {Sy1_w}")
 Sy1_w.doit()
 
-p1 = plt.plot(Sw, show=False)
-p2 = plt.plot(Sy1_w, show=False)
+p1 = plt.plot(Sw, legend=True, show=False)
+p2 = plt.plot(Sy1_w, legend=True, show=False)
+
 p1.extend(p2)
+
 print(p1)
 p1.show()
-
-
